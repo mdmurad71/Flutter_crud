@@ -7,12 +7,13 @@ import 'package:http/http.dart' as http;
 import '../style.dart';
 
 
-Future<List> GetProductData()async{
+Future<List> GetProductData() async{
   var url = Uri.parse("https://crud.teamrabbil.com/api/v1/ReadProduct");
   var PostHeader= {"Content-Type": "application/json"};
-  var response = await http.post(url, headers: PostHeader);
+  var response = await http.get(url, headers: PostHeader);
   var resultCode= response.statusCode;
   var resultBody= json.decode(response.body);
+  // print(resultBody);
 
   if(resultCode== 200 && resultBody['status']== 'success'){
 

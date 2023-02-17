@@ -1,3 +1,4 @@
+import 'package:crud/ProductGridView.dart';
 import 'package:flutter/material.dart';
 
 import 'CreateProductPage.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home: CreateProductPage(),
+      home: ProductGridView(),
     );
   }
 

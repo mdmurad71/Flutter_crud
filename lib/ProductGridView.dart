@@ -3,6 +3,8 @@ import 'package:crud/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'RestApi/RestClient.dart';
+
 class ProductGridView extends StatefulWidget {
   const ProductGridView({Key? key}) : super(key: key);
 
@@ -13,10 +15,24 @@ class ProductGridView extends StatefulWidget {
 class _ProductGridViewState extends State<ProductGridView> {
 
 
- var Loading= true;
  var ProductList= [];
+ bool Loading= true;
+ @override
+ void initState(){
+   callData();
+   super.initState();
+ }
 
- callData(){
+ callData() async{
+ Loading= true;
+ var data= await GetProductData();
+ setState(() {
+   ProductList= data;
+   print(ProductList);
+
+   Loading= false;
+ });
+
 
  }
 
@@ -40,15 +56,15 @@ class _ProductGridViewState extends State<ProductGridView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(child: Image.network(ProductList[index]['Img'], fit: BoxFit.fill,)),
+                            Expanded(child: Image.network(ProductList[index]['image'], fit: BoxFit.fill,)),
                             Container(
                               padding: EdgeInsets.fromLTRB(5, 5, 5, 8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(ProductList[index]['ProductName']),
+                                  Text(ProductList[index]['title']),
                                   SizedBox(height: 7,),
-                                  Text("price:"+ProductList[index]['UnitPrice']+ "BDT"),
+                                  Text("price:"+ProductList[index]['price']+ "BDT"),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
