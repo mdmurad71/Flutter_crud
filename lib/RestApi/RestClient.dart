@@ -49,3 +49,21 @@ Future<List> GetProductData() async{
 
 
 }
+
+
+
+Future<bool> DeleteProduct(id) async{
+  var url = Uri.parse("https://crud.teamrabbil.com/api/v1/DeleteProduct/"+id);
+  var PostHeader= {"Content-Type": "application/json"};
+  var response = await http.get(url, headers: PostHeader);
+  var resultCode= response.statusCode;
+  var resultBody= json.decode(response.body);
+  // print(resultBody);
+
+  if(resultCode== 200 && resultBody['status']== 'success'){
+
+    return true;
+  }else{
+    return false;
+  }
+}

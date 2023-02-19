@@ -36,6 +36,50 @@ class _ProductGridViewState extends State<ProductGridView> {
 
  }
 
+ DeleteItem(id) async{
+   showDialog(
+       context: context,
+        builder: (BuildContext context){
+      return AlertDialog(
+        title: Text('Delete !'),
+        content: Text(id),
+        actions: [
+          OutlinedButton(onPressed: () async{
+            Navigator.pop(context);
+
+            setState(() {
+              Loading = true;
+            });
+            await DeleteProduct(id);
+            await callData();
+
+
+          }, child: Text("Yes")),
+          OutlinedButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Text("No")),
+        ],
+
+      );
+        }
+   );
+ }
+
+ // Delete(){
+ //   showDialog(
+ //       context: context,
+ //       builder: (BuildContext, context){
+ //         return AlertDialog()
+ //       }
+ //   )
+ // }
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,22 +100,24 @@ class _ProductGridViewState extends State<ProductGridView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Expanded(child: Image.network(ProductList[index]['image'], fit: BoxFit.fill,)),
+                            Expanded(child: Image.network(ProductList[index]['Img'], fit: BoxFit.fill,)),
                             Container(
                               padding: EdgeInsets.fromLTRB(5, 5, 5, 8),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(ProductList[index]['title']),
+                                  Text(ProductList[index]['ProductName']),
                                   SizedBox(height: 7,),
-                                  Text("price:"+ProductList[index]['price']+ "BDT"),
+                                  Text("price:"+ProductList[index]['UnitPrice']+ "BDT"),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       OutlinedButton(onPressed: (){},
                                           child: Icon(CupertinoIcons.ellipsis_vertical_circle, size: 18, color: Colors.green,)
                                       ),
-                                      OutlinedButton(onPressed: (){},
+                                      OutlinedButton(onPressed: (){
+                                        DeleteItem(ProductList[index]['_id']);
+                                      },
                                           child: Icon(CupertinoIcons.delete, size: 18, color: Colors.green,)
                                       ),
                                     ],
