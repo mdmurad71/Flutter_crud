@@ -1,4 +1,6 @@
 
+import 'package:crud/CreateProductPage.dart';
+import 'package:crud/ProductUpdateView.dart';
 import 'package:crud/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,14 +67,9 @@ class _ProductGridViewState extends State<ProductGridView> {
    );
  }
 
- // Delete(){
- //   showDialog(
- //       context: context,
- //       builder: (BuildContext, context){
- //         return AlertDialog()
- //       }
- //   )
- // }
+ gotoUpdate(context, ProductItem){
+   Navigator.push(context, MaterialPageRoute(builder: (builder)=>ProductUpdateView(ProductItem)));
+ }
 
 
 
@@ -112,7 +109,11 @@ class _ProductGridViewState extends State<ProductGridView> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      OutlinedButton(onPressed: (){},
+                                      OutlinedButton(onPressed: (){
+
+                                        gotoUpdate(context, ProductList[index]);
+                                        // Navigator.push(context, MaterialPageRoute(builder: (builder)=>ProductUpdateView(context, ProductList[index])));
+                                      },
                                           child: Icon(CupertinoIcons.ellipsis_vertical_circle, size: 18, color: Colors.green,)
                                       ),
                                       OutlinedButton(onPressed: (){
@@ -136,6 +137,17 @@ class _ProductGridViewState extends State<ProductGridView> {
           )
         ],
       ),
+      floatingActionButton:         FloatingActionButton(
+
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (builder)=>CreateProductPage()));
+        },
+        child: Icon(Icons.add),
+      )
+      ,
+
+
+
     );
   }
 }

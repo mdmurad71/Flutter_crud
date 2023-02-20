@@ -67,3 +67,28 @@ Future<bool> DeleteProduct(id) async{
     return false;
   }
 }
+
+
+Future<bool>  ProductUpdateRequest(FormValues, id) async{
+
+  var url = Uri.parse("https://crud.teamrabbil.com/api/v1/UpdateProduct/"+id);
+
+  var PostBody= json.encode(FormValues);
+  var PostHeader= {"Content-Type": "application/json"};
+
+  // Await the http get response, then decode the json-formatted response.
+  var response = await http.post(url, headers: PostHeader, body: PostBody);
+  var resultCode= response.statusCode;
+  var resultBody= json.decode(response.body);
+
+  if(resultCode== 200 && resultBody['status']== 'success'){
+
+    // MySnackBar("Successfully added product", context);
+    return true;
+  }else{
+    // MySnackBar("something went wrong", context);
+    return false;
+  }
+
+
+}
